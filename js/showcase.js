@@ -76,10 +76,10 @@ class PhoneShowcase {
         // Phone entrance animation (first 10%)
         tl.fromTo(this.phone, 
             { 
-                scale: 0.6, 
-                y: 100,
-                rotationX: 15,
-                opacity: 0 
+                scale: 0.92, 
+                y: 40,
+                rotationX: 8,
+                opacity: 1 
             },
             { 
                 scale: 1, 
