@@ -152,6 +152,10 @@ function initScrollProgress() {
  * Reveal animations on scroll
  */
 function initRevealAnimations() {
+    if (window.Motion) {
+        return;
+    }
+
     const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children');
 
     if (prefersReducedMotion) {
