@@ -20,10 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initNavigation() {
     const nav = document.querySelector('nav');
+    const menuBtn = document.getElementById('mobile-menu-btn');
     let lastScroll = 0;
     
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
+        const menuOpen = menuBtn && menuBtn.getAttribute('aria-expanded') === 'true';
         
         // Add/remove scrolled class for styling
         if (currentScroll > 50) {
@@ -34,7 +36,9 @@ function initNavigation() {
         
         // Hide/show on scroll direction (mobile)
         if (window.innerWidth < 768) {
-            if (currentScroll > lastScroll && currentScroll > 100) {
+            if (menuOpen) {
+                nav.style.transform = 'translateY(0)';
+            } else if (currentScroll > lastScroll && currentScroll > 100) {
                 nav.style.transform = 'translateY(-100%)';
             } else {
                 nav.style.transform = 'translateY(0)';

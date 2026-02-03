@@ -15,6 +15,7 @@ class PhoneShowcase {
         this.scrollHint = document.querySelector('#showcase-scroll-hint');
         this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         this.hasGSAP = typeof gsap !== 'undefined';
+        this.hasScrollTrigger = typeof ScrollTrigger !== 'undefined';
         
         this.currentScreen = 0;
         this.totalScreens = this.screens.length;
@@ -26,15 +27,14 @@ class PhoneShowcase {
     init() {
         if (!this.section || !this.phone) return;
 
-        if (this.prefersReducedMotion || !this.hasGSAP) {
+        if (this.prefersReducedMotion || !this.hasGSAP || !this.hasScrollTrigger) {
+            this.section.classList.add('showcase-static');
             this.floatElements.forEach(el => el.classList.add('visible'));
             this.setupDotClickHandlers();
             return;
         }
 
-        if (typeof ScrollTrigger !== 'undefined') {
-            gsap.registerPlugin(ScrollTrigger);
-        }
+        gsap.registerPlugin(ScrollTrigger);
         
         this.setupScrollTrigger();
         this.setupPhoneTilt();
@@ -264,7 +264,7 @@ class PhoneShowcase {
         
         this.dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
-                if (this.prefersReducedMotion || !this.hasGSAP) {
+                if (this.prefersReducedMotion || !this.hasGSAP || !this.hasScrollTrigger) {
                     this.switchScreen(index);
                     return;
                 }
@@ -315,6 +315,7 @@ class PhoneShowcase {
 function initMobileScrollSnap() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!window.matchMedia('(pointer: coarse)').matches) return;
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') return;
     
     const section = document.querySelector('.phone-showcase-section');
     if (!section) return;
@@ -369,36 +370,52 @@ function initKeyboardNav() {
     const showcase = document.querySelector('.phone-showcase-section');
     if (!showcase) return;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const scrollPoints = [0, 0.40, 0.60, 0.80];
     
     document.addEventListener('keydown', (e) => {
         const rect = showcase.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
         
         if (!isVisible) return;
-        
-        const screenHeight = showcase.offsetHeight / 4;
-        let targetScroll = window.scrollY;
-        
-        switch(e.key) {
+
+        const maxScroll = showcase.offsetHeight - window.innerHeight;
+        if (maxScroll <= 0) return;
+
+        const currentProgress = Math.min(
+            Math.max((window.scrollY - showcase.offsetTop) / maxScroll, 0),
+            1
+        );
+        const nearestIndex = scrollPoints.reduce((closestIndex, point, index) => {
+            const closestPoint = scrollPoints[closestIndex];
+            return Math.abs(point - currentProgress) < Math.abs(closestPoint - currentProgress)
+                ? index
+                : closestIndex;
+        }, 0);
+
+        let targetIndex = nearestIndex;
+        switch (e.key) {
             case 'ArrowDown':
             case 'ArrowRight':
                 e.preventDefault();
-                targetScroll += screenHeight;
+                targetIndex = Math.min(nearestIndex + 1, scrollPoints.length - 1);
                 break;
             case 'ArrowUp':
             case 'ArrowLeft':
                 e.preventDefault();
-                targetScroll -= screenHeight;
+                targetIndex = Math.max(nearestIndex - 1, 0);
                 break;
             case '1':
             case '2':
             case '3':
             case '4':
                 e.preventDefault();
-                targetScroll = showcase.offsetTop + (screenHeight * (parseInt(e.key) - 1));
+                targetIndex = Math.min(parseInt(e.key, 10) - 1, scrollPoints.length - 1);
                 break;
+            default:
+                return;
         }
-        
+
+        const targetScroll = showcase.offsetTop + (maxScroll * scrollPoints[targetIndex]);
         window.scrollTo({
             top: targetScroll,
             behavior: prefersReducedMotion ? 'auto' : 'smooth'

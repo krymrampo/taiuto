@@ -227,6 +227,16 @@ body {
     height: 400vh;
 }
 
+.phone-showcase-section.showcase-static {
+    height: auto;
+}
+
+.phone-showcase-section.showcase-static .phone-showcase-container {
+    height: auto;
+    min-height: 100vh;
+    padding: 4rem 0;
+}
+
 .phone-showcase-container {
     position: relative;
     height: 100vh;
@@ -428,33 +438,46 @@ body {
 .progress-dot {
     appearance: none;
     -webkit-appearance: none;
-    border: 2px solid transparent;
+    border: none;
     padding: 0;
-    width: 12px;
-    height: 12px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.1);
+    background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
 }
 
+.progress-dot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.15);
+    transform: translate(-50%, -50%);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
 .progress-dot::after {
     content: '';
     position: absolute;
-    inset: -6px;
+    inset: 4px;
     border-radius: 50%;
     border: 1px solid transparent;
     transition: all 0.3s ease;
 }
 
-.progress-dot.active {
-    background: var(--color-whatsapp);
-    transform: scale(1.3);
-}
-
 .progress-dot.active::after {
     border-color: rgba(37, 211, 102, 0.3);
+}
+
+.progress-dot.active::before {
+    background: var(--color-whatsapp);
+    transform: translate(-50%, -50%) scale(1.2);
 }
 
 .progress-dot:focus-visible {
@@ -486,7 +509,7 @@ body {
     transform: translateX(-30px);
     opacity: 0;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
+    white-space: normal;
     pointer-events: none;
 }
 
@@ -765,7 +788,8 @@ nav.scrolled {
 /* Responsive Showcase */
 @media (max-width: 1024px) {
     .showcase-labels,
-    .showcase-progress {
+    .showcase-progress,
+    .float-element {
         display: none;
     }
     
