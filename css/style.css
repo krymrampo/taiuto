@@ -136,7 +136,7 @@ body {
     user-select: none;
     pointer-events: none;
     position: absolute;
-    top: 6%;
+    top: 12%;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
@@ -162,7 +162,7 @@ body {
     .hero-watermark {
         font-size: 25vw;
         font-weight: 500;
-        top: 10%;
+        top: 16%;
     }
 }
 
