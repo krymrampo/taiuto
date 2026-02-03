@@ -119,15 +119,15 @@ body {
 
 /* Hero Watermark - Balanced Visibility with Vertical Fade */
 .hero-watermark {
-    font-size: 17vw;
+    font-size: 20vw;
     font-weight: 500;
     font-family: 'Plus Jakarta Sans', sans-serif;
     /* Color gradient - 100% to 30% opacity */
     background: linear-gradient(
         135deg,
-        rgba(37, 211, 102, 1) 0%,
-        rgba(18, 140, 126, 0.7) 50%,
-        rgba(245, 158, 11, 0.3) 100%
+        rgba(37, 211, 102, 0.9) 0%,
+        rgba(18, 140, 126, 0.75) 55%,
+        rgba(245, 158, 11, 0.6) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -136,34 +136,34 @@ body {
     user-select: none;
     pointer-events: none;
     position: absolute;
-    top: 14%;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     text-align: center;
-    opacity: 0.22;
+    opacity: 0.4;
     /* Mask gradient: visible at top, fades to transparent at bottom */
     -webkit-mask-image: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 0.7) 25%,
-        rgba(0, 0, 0, 0.3) 40%,
-        transparent 55%
+        rgba(0, 0, 0, 0.9) 40%,
+        rgba(0, 0, 0, 0.5) 70%,
+        transparent 100%
     );
     mask-image: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 0.7) 25%,
-        rgba(0, 0, 0, 0.3) 40%,
-        transparent 55%
+        rgba(0, 0, 0, 0.9) 40%,
+        rgba(0, 0, 0, 0.5) 70%,
+        transparent 100%
     );
 }
 
 @media (max-width: 768px) {
     .hero-watermark {
-        font-size: 22vw;
+        font-size: 24vw;
         font-weight: 500;
-        top: 18%;
+        top: 14%;
     }
 }
 
