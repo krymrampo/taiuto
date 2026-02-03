@@ -3,6 +3,8 @@
  * Main application logic and utilities
  */
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all modules
     initNavigation();
@@ -41,6 +43,12 @@ function initNavigation() {
         
         lastScroll = currentScroll;
     });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            nav.style.transform = 'translateY(0)';
+        }
+    });
 }
 
 /**
@@ -54,12 +62,16 @@ function initMobileMenu() {
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
             const icon = menuBtn.querySelector('i');
+            const isOpen = !mobileMenu.classList.contains('hidden');
             
             if (mobileMenu.classList.contains('hidden')) {
                 icon.setAttribute('data-lucide', 'menu');
             } else {
                 icon.setAttribute('data-lucide', 'x');
             }
+
+            menuBtn.setAttribute('aria-expanded', String(isOpen));
+            menuBtn.setAttribute('aria-label', isOpen ? 'Chiudi menu' : 'Apri menu');
             
             // Re-initialize Lucide icons
             if (typeof lucide !== 'undefined') {
@@ -71,6 +83,15 @@ function initMobileMenu() {
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                menuBtn.setAttribute('aria-label', 'Apri menu');
+                const icon = menuBtn.querySelector('i');
+                if (icon) {
+                    icon.setAttribute('data-lucide', 'menu');
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                }
             });
         });
     }
@@ -82,17 +103,26 @@ function initMobileMenu() {
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
+            if (this.getAttribute('aria-disabled') === 'true') {
+                e.preventDefault();
+                return;
+            }
+
             const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#' || targetId.length < 2) {
+                return;
+            }
+
             const target = document.querySelector(targetId);
             
             if (target) {
+                e.preventDefault();
                 const navHeight = document.querySelector('nav').offsetHeight;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
                 
                 window.scrollTo({
                     top: targetPosition,
-                    behavior: 'smooth'
+                    behavior: prefersReducedMotion ? 'auto' : 'smooth'
                 });
                 
                 // Update URL without jumping
@@ -123,6 +153,11 @@ function initScrollProgress() {
  */
 function initRevealAnimations() {
     const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children');
+
+    if (prefersReducedMotion) {
+        revealElements.forEach(el => el.classList.add('active'));
+        return;
+    }
     
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -146,6 +181,8 @@ function initBackToTop() {
     const backToTop = document.createElement('button');
     backToTop.className = 'back-to-top';
     backToTop.innerHTML = '<i data-lucide="arrow-up"></i>';
+    backToTop.setAttribute('aria-label', 'Torna su');
+    backToTop.setAttribute('title', 'Torna su');
     backToTop.style.cssText = `
         position: fixed;
         bottom: 30px;
@@ -192,7 +229,7 @@ function initBackToTop() {
     backToTop.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: prefersReducedMotion ? 'auto' : 'smooth'
         });
     });
     

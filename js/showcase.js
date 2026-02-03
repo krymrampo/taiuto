@@ -13,6 +13,8 @@ class PhoneShowcase {
         this.labels = document.querySelectorAll('.showcase-label');
         this.floatElements = document.querySelectorAll('.float-element');
         this.scrollHint = document.querySelector('#showcase-scroll-hint');
+        this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.hasGSAP = typeof gsap !== 'undefined';
         
         this.currentScreen = 0;
         this.totalScreens = this.screens.length;
@@ -23,6 +25,16 @@ class PhoneShowcase {
     
     init() {
         if (!this.section || !this.phone) return;
+
+        if (this.prefersReducedMotion || !this.hasGSAP) {
+            this.floatElements.forEach(el => el.classList.add('visible'));
+            this.setupDotClickHandlers();
+            return;
+        }
+
+        if (typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
         
         this.setupScrollTrigger();
         this.setupPhoneTilt();
@@ -110,23 +122,25 @@ class PhoneShowcase {
             this.switchScreen(screenIndex);
         }
         
-        // Phone subtle rotation based on scroll
-        const rotationY = (progress - 0.5) * 10; // -5 to 5 degrees
-        gsap.to(this.phone, {
-            rotationY: rotationY,
-            duration: 0.3,
-            ease: 'power2.out'
-        });
-        
-        // Scale phone slightly during middle of scroll
-        let scale = 1;
-        if (progress > 0.1 && progress < 0.9) {
-            scale = 1 + Math.sin((progress - 0.1) / 0.8 * Math.PI) * 0.1;
+        if (!this.prefersReducedMotion && this.hasGSAP) {
+            // Phone subtle rotation based on scroll
+            const rotationY = (progress - 0.5) * 10; // -5 to 5 degrees
+            gsap.to(this.phone, {
+                rotationY: rotationY,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+            
+            // Scale phone slightly during middle of scroll
+            let scale = 1;
+            if (progress > 0.1 && progress < 0.9) {
+                scale = 1 + Math.sin((progress - 0.1) / 0.8 * Math.PI) * 0.1;
+            }
+            gsap.to(this.phone, {
+                scale: scale,
+                duration: 0.3
+            });
         }
-        gsap.to(this.phone, {
-            scale: scale,
-            duration: 0.3
-        });
         
         // Update progress dots
         this.updateProgressDots(progress);
@@ -141,29 +155,31 @@ class PhoneShowcase {
         // Hide previous screen and label immediately
         this.screens[prevIndex].classList.remove('active');
         this.labels[prevIndex].classList.remove('active');
-        
-        // Reset previous label position for next time
-        gsap.set(this.labels[prevIndex], { 
-            x: -40, 
-            opacity: 0,
-            overwrite: 'auto' 
-        });
-        
+
         // Show new screen
         this.screens[index].classList.add('active');
         this.labels[index].classList.add('active');
-        
-        // Animate screen transition
-        gsap.fromTo(this.screens[index], 
-            { scale: 0.9, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', overwrite: true }
-        );
-        
-        // Animate new label in
-        gsap.fromTo(this.labels[index],
-            { x: -40, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out', overwrite: true }
-        );
+
+        if (!this.prefersReducedMotion && this.hasGSAP) {
+            // Reset previous label position for next time
+            gsap.set(this.labels[prevIndex], { 
+                x: -40, 
+                opacity: 0,
+                overwrite: 'auto' 
+            });
+            
+            // Animate screen transition
+            gsap.fromTo(this.screens[index], 
+                { scale: 0.9, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', overwrite: true }
+            );
+            
+            // Animate new label in
+            gsap.fromTo(this.labels[index],
+                { x: -40, opacity: 0 },
+                { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out', overwrite: true }
+            );
+        }
         
         this.currentScreen = index;
         
@@ -191,6 +207,8 @@ class PhoneShowcase {
     }
     
     animateFloatElements(progress) {
+        if (this.prefersReducedMotion || !this.hasGSAP) return;
+
         this.floatElements.forEach((el, i) => {
             const speed = 0.5 + (i * 0.2);
             const offset = Math.sin((progress * Math.PI * 2) + i) * 20;
@@ -206,6 +224,7 @@ class PhoneShowcase {
     
     setupPhoneTilt() {
         // 3D tilt effect on mouse move (only when pinned)
+        if (this.prefersReducedMotion || !this.hasGSAP) return;
         if (window.matchMedia('(pointer: coarse)').matches) return; // Skip on touch devices
         
         document.addEventListener('mousemove', (e) => {
@@ -245,9 +264,15 @@ class PhoneShowcase {
         
         this.dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
+                if (this.prefersReducedMotion || !this.hasGSAP) {
+                    this.switchScreen(index);
+                    return;
+                }
+
                 const targetProgress = scrollPoints[index];
                 const sectionHeight = this.section.offsetHeight;
-                const targetScroll = this.section.offsetTop + (sectionHeight * targetProgress);
+                const maxScroll = sectionHeight - window.innerHeight;
+                const targetScroll = this.section.offsetTop + (maxScroll * targetProgress);
                 
                 window.scrollTo({
                     top: targetScroll,
@@ -259,6 +284,7 @@ class PhoneShowcase {
     
     showScrollHint() {
         if (this.scrollHint) {
+            if (this.prefersReducedMotion || !this.hasGSAP) return;
             gsap.to(this.scrollHint, {
                 opacity: 1,
                 duration: 0.5,
@@ -274,6 +300,7 @@ class PhoneShowcase {
     
     hideScrollHint() {
         if (this.scrollHint) {
+            if (this.prefersReducedMotion || !this.hasGSAP) return;
             gsap.to(this.scrollHint, {
                 opacity: 0,
                 duration: 0.3
@@ -286,31 +313,52 @@ class PhoneShowcase {
  * Alternative: Simple scroll snap for mobile
  */
 function initMobileScrollSnap() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!window.matchMedia('(pointer: coarse)').matches) return;
     
     const section = document.querySelector('.phone-showcase-section');
     if (!section) return;
     
-    let isScrolling = false;
+    const scrollPoints = [0, 0.40, 0.60, 0.80];
+    let snapTimer;
     
-    section.addEventListener('scroll', () => {
-        if (isScrolling) return;
+    window.addEventListener('scroll', () => {
+        clearTimeout(snapTimer);
         
-        isScrolling = true;
-        
-        setTimeout(() => {
-            const scrollTop = section.scrollTop;
+        snapTimer = setTimeout(() => {
+            const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
-            const screenIndex = Math.round(scrollTop / (sectionHeight / 4));
-            const targetScroll = screenIndex * (sectionHeight / 4);
+            const maxScroll = sectionHeight - window.innerHeight;
+            if (maxScroll <= 0) {
+                return;
+            }
+            const scrollY = window.scrollY;
+            const viewportCenter = scrollY + (window.innerHeight / 2);
+            const sectionBottom = sectionTop + sectionHeight;
             
-            section.scrollTo({
+            if (viewportCenter < sectionTop || viewportCenter > sectionBottom) {
+                return;
+            }
+            
+            const progress = Math.min(Math.max((scrollY - sectionTop) / maxScroll, 0), 1);
+            let closest = scrollPoints[0];
+            let minDelta = Math.abs(progress - closest);
+            
+            scrollPoints.forEach(point => {
+                const delta = Math.abs(progress - point);
+                if (delta < minDelta) {
+                    minDelta = delta;
+                    closest = point;
+                }
+            });
+            
+            const targetScroll = sectionTop + (maxScroll * closest);
+            
+            window.scrollTo({
                 top: targetScroll,
                 behavior: 'smooth'
             });
-            
-            isScrolling = false;
-        }, 100);
+        }, 120);
     });
 }
 
@@ -320,6 +368,7 @@ function initMobileScrollSnap() {
 function initKeyboardNav() {
     const showcase = document.querySelector('.phone-showcase-section');
     if (!showcase) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     document.addEventListener('keydown', (e) => {
         const rect = showcase.getBoundingClientRect();
@@ -352,7 +401,7 @@ function initKeyboardNav() {
         
         window.scrollTo({
             top: targetScroll,
-            behavior: 'smooth'
+            behavior: prefersReducedMotion ? 'auto' : 'smooth'
         });
     });
 }

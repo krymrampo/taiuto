@@ -224,8 +224,7 @@ body {
 }
 
 .phone-showcase-container {
-    position: sticky;
-    top: 0;
+    position: relative;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -423,11 +422,14 @@ body {
 }
 
 .progress-dot {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 2px solid transparent;
+    padding: 0;
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.1);
-    border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -449,6 +451,11 @@ body {
 
 .progress-dot.active::after {
     border-color: rgba(37, 211, 102, 0.3);
+}
+
+.progress-dot:focus-visible {
+    outline: 2px solid var(--color-whatsapp);
+    outline-offset: 4px;
 }
 
 /* Labels - Fixed positioning to prevent overlap */
@@ -617,6 +624,13 @@ body {
     width: 100%;
 }
 
+nav.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
 /* Mobile Menu */
 .mobile-menu {
     transition: all 0.3s ease;
@@ -637,20 +651,6 @@ body {
 /* Pricing Card Highlight */
 .pricing-popular {
     position: relative;
-}
-
-.pricing-popular::before {
-    content: 'PIÙ SCELTO';
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--color-whatsapp);
-    color: white;
-    padding: 4px 16px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
 }
 
 /* Table Styles */
@@ -678,6 +678,12 @@ body {
 
 .footer-link:hover {
     color: white;
+}
+
+.link-disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
 }
 
 /* Scroll Progress */
@@ -738,6 +744,10 @@ body {
     
     html {
         scroll-behavior: auto;
+    }
+
+    .phone-showcase-section {
+        height: 100vh;
     }
 }
 

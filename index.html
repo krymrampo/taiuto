@@ -57,17 +57,14 @@
         }
     </script>
 </head>
-<body class="font-sans text-gray-800 bg-white overflow-x-hidden">
-
-    <!-- Scroll Progress -->
-    <div class="scroll-progress"></div>
+<body id="top" class="font-sans text-gray-800 bg-white overflow-x-hidden">
 
     <!-- Navigation - Gradient Green to White -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-whatsapp via-whatsapp/80 to-white transition-transform duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center h-16">
                 <!-- Logo Left -->
-                <a href="#" class="flex items-center space-x-2 flex-shrink-0">
+                <a href="#top" class="flex items-center space-x-2 flex-shrink-0">
                     <div class="w-10 h-10 bg-whatsapp rounded-xl flex items-center justify-center">
                         <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
                     </div>
@@ -86,7 +83,7 @@
                     <a href="#demo" class="hidden md:inline-flex btn-shine bg-whatsapp hover:bg-whatsapp-dark text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md">
                         Richiedi Demo
                     </a>
-                    <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700">
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700" aria-label="Apri menu" aria-expanded="false" aria-controls="mobile-menu">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                 </div>
@@ -124,6 +121,16 @@
                 tAIuto risponde ai messaggi, prenota appuntamenti e libera <strong class="text-gray-900">30+ ore al mese</strong>. 
                 Zero telefonate. Zero stress. Più clienti soddisfatti.
             </p>
+
+            <!-- Mobile CTA -->
+            <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8 md:hidden">
+                <a href="#demo" class="btn-shine inline-flex items-center justify-center bg-whatsapp hover:bg-whatsapp-dark text-white px-6 py-3 rounded-full text-base font-semibold transition-all shadow-md">
+                    Richiedi Demo
+                </a>
+                <a href="#prezzi" class="inline-flex items-center justify-center bg-white border border-gray-200 text-gray-800 hover:bg-gray-50 px-6 py-3 rounded-full text-base font-semibold transition-all">
+                    Vedi Prezzi
+                </a>
+            </div>
             
             <!-- Trust Badges -->
             <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
@@ -133,7 +140,7 @@
                 </div>
                 <div class="flex items-center space-x-2">
                     <i data-lucide="clock" class="w-4 h-4 text-whatsapp"></i>
-                    <span>Setup in 24h</span>
+                    <span>Setup in 48h</span>
                 </div>
                 <div class="flex items-center space-x-2">
                     <i data-lucide="message-circle" class="w-4 h-4 text-whatsapp"></i>
@@ -150,7 +157,7 @@
     </section>
 
     <!-- PHONE SHOWCASE SECTION - Scroll Fullscreen Experience -->
-    <section id="showcase" class="phone-showcase-section">
+    <section id="funzionalita" class="phone-showcase-section">
         <div class="phone-showcase-container">
             <!-- Background -->
             <div class="phone-showcase-bg">
@@ -162,10 +169,10 @@
             
             <!-- Progress Dots -->
             <div class="showcase-progress">
-                <div class="progress-dot active" data-screen="0"></div>
-                <div class="progress-dot" data-screen="1"></div>
-                <div class="progress-dot" data-screen="2"></div>
-                <div class="progress-dot" data-screen="3"></div>
+                <button type="button" class="progress-dot active" data-screen="0" aria-label="Vai alla schermata 1: WhatsApp AI"></button>
+                <button type="button" class="progress-dot" data-screen="1" aria-label="Vai alla schermata 2: Dashboard Intuitiva"></button>
+                <button type="button" class="progress-dot" data-screen="2" aria-label="Vai alla schermata 3: Agenda Smart"></button>
+                <button type="button" class="progress-dot" data-screen="3" aria-label="Vai alla schermata 4: Analytics Potenti"></button>
             </div>
             
             <!-- Labels -->
@@ -917,7 +924,7 @@
             </div>
             
             <div class="grid md:grid-cols-3 gap-8 stagger-children">
-                <div class="target-card reveal p-8 rounded-3xl bg-gray-50 cursor-pointer">
+                <div class="target-card reveal p-8 rounded-3xl bg-gray-50">
                     <div class="target-icon w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 transition-colors">
                         <i data-lucide="clock" class="w-8 h-8 text-whatsapp transition-colors"></i>
                     </div>
@@ -925,7 +932,7 @@
                     <p class="target-text text-gray-600 transition-colors">Stai ancora rispondendo personalmente a ogni messaggio? tAIuto ti restituisce la tua giornata.</p>
                 </div>
                 
-                <div class="target-card reveal p-8 rounded-3xl bg-gray-50 cursor-pointer">
+                <div class="target-card reveal p-8 rounded-3xl bg-gray-50">
                     <div class="target-icon w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 transition-colors">
                         <i data-lucide="trending-up" class="w-8 h-8 text-whatsapp transition-colors"></i>
                     </div>
@@ -933,7 +940,7 @@
                     <p class="target-text text-gray-600 transition-colors">Vuoi più clienti senza assumere? L'AI scala con te, senza costi aggiuntivi.</p>
                 </div>
                 
-                <div class="target-card reveal p-8 rounded-3xl bg-gray-50 cursor-pointer">
+                <div class="target-card reveal p-8 rounded-3xl bg-gray-50">
                     <div class="target-icon w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 transition-colors">
                         <i data-lucide="smartphone" class="w-8 h-8 text-whatsapp transition-colors"></i>
                     </div>
@@ -987,7 +994,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div>
-                    <a href="#" class="flex items-center space-x-2 mb-4">
+                    <a href="#top" class="flex items-center space-x-2 mb-4">
                         <div class="w-10 h-10 bg-gradient-to-br from-whatsapp to-whatsapp-dark rounded-xl flex items-center justify-center">
                             <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
                         </div>
@@ -1008,9 +1015,9 @@
                 <div>
                     <h4 class="font-semibold mb-4">Azienda</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="footer-link hover:text-white transition-colors">Chi siamo</a></li>
-                        <li><a href="#" class="footer-link hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="#" class="footer-link hover:text-white transition-colors">Lavora con noi</a></li>
+                        <li><a href="#" class="footer-link link-disabled" aria-disabled="true" tabindex="-1" title="In arrivo">Chi siamo</a></li>
+                        <li><a href="#" class="footer-link link-disabled" aria-disabled="true" tabindex="-1" title="In arrivo">Blog</a></li>
+                        <li><a href="#" class="footer-link link-disabled" aria-disabled="true" tabindex="-1" title="In arrivo">Lavora con noi</a></li>
                     </ul>
                 </div>
                 
@@ -1032,13 +1039,13 @@
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-sm text-gray-500">© 2026 tAIuto. Tutti i diritti riservati.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors link-disabled" aria-disabled="true" tabindex="-1" title="In arrivo">
                         <i data-lucide="instagram" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors link-disabled" aria-disabled="true" tabindex="-1" title="In arrivo">
                         <i data-lucide="linkedin" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors link-disabled" aria-disabled="true" tabindex="-1" title="In arrivo">
                         <i data-lucide="facebook" class="w-5 h-5"></i>
                     </a>
                 </div>
