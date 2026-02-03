@@ -5,24 +5,35 @@
 
 (() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let hasScrollTrigger = false;
 
     document.addEventListener('DOMContentLoaded', () => {
         if (prefersReducedMotion || typeof gsap === 'undefined') {
             return;
         }
 
-        if (typeof ScrollTrigger !== 'undefined') {
+        hasScrollTrigger = typeof ScrollTrigger !== 'undefined';
+        if (hasScrollTrigger) {
             gsap.registerPlugin(ScrollTrigger);
         }
 
         initHeroAnimations();
-        initScrollAnimations();
+        if (hasScrollTrigger) {
+            initScrollAnimations();
+        }
     });
 
 /**
  * Hero section entrance animations
  */
 function initHeroAnimations() {
+    gsap.from('nav', {
+        y: -12,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out'
+    });
+
     // Animate hero watermark
     gsap.from('.hero-watermark', {
         opacity: 0,
@@ -30,6 +41,19 @@ function initHeroAnimations() {
         duration: 1.2,
         ease: 'power3.out'
     });
+
+    if (hasScrollTrigger) {
+        gsap.to('.hero-watermark', {
+            y: 18,
+            scale: 1.02,
+            scrollTrigger: {
+                trigger: '.hero-section',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+    }
     
     // Animate hero content
     gsap.from('.hero-section p', {
@@ -55,6 +79,39 @@ function initHeroAnimations() {
  * Scroll-triggered section animations
  */
 function initScrollAnimations() {
+    // Subtle parallax for showcase background
+    gsap.to('.orb-1', {
+        x: 60,
+        y: -80,
+        scrollTrigger: {
+            trigger: '.phone-showcase-section',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+        }
+    });
+
+    gsap.to('.orb-2', {
+        x: -50,
+        y: 70,
+        scrollTrigger: {
+            trigger: '.phone-showcase-section',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+        }
+    });
+
+    gsap.to('.dot-pattern', {
+        backgroundPosition: '80px 80px',
+        scrollTrigger: {
+            trigger: '.phone-showcase-section',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+        }
+    });
+
     // Steps section
     gsap.from('.step-card', {
         scrollTrigger: {
