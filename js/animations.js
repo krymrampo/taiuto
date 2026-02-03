@@ -3,20 +3,21 @@
  * Advanced scroll-triggered animations
  */
 
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (prefersReducedMotion || typeof gsap === 'undefined') {
-        return;
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+        if (prefersReducedMotion || typeof gsap === 'undefined') {
+            return;
+        }
 
-    if (typeof ScrollTrigger !== 'undefined') {
-        gsap.registerPlugin(ScrollTrigger);
-    }
+        if (typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
 
-    initHeroAnimations();
-    initScrollAnimations();
-});
+        initHeroAnimations();
+        initScrollAnimations();
+    });
 
 /**
  * Hero section entrance animations
@@ -178,6 +179,7 @@ function initScrollAnimations() {
         ease: 'power3.out'
     });
 }
+})();
 
 /**
  * Refresh ScrollTrigger on resize
