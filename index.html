@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tAIuto — L'AI che gestisce il tuo salone</title>
+    <meta name="description" content="tAIuto: AI che risponde su WhatsApp, prenota appuntamenti e libera 30+ ore al mese al tuo salone.">
+    <meta name="theme-color" content="#25D366">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2325D366' rx='20' width='100' height='100'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='50'>✨</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        whatsapp: {
+                            light: '#dcf8c6',
+                            DEFAULT: '#25D366',
+                            dark: '#128C7E',
+                            darker: '#075E54',
+                        },
+                        brand: {
+                            yellow: '#FCD34D',
+                            amber: '#F59E0B',
+                            dark: '#1F2937',
+                            darker: '#111827',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans text-gray-800 bg-white overflow-x-hidden">
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress"></div>
+
+    <!-- Navigation - Gradient Green to White -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-whatsapp via-whatsapp/80 to-white transition-transform duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center h-16">
+                <!-- Logo Left -->
+                <a href="#" class="flex items-center space-x-2 flex-shrink-0">
+                    <div class="w-10 h-10 bg-whatsapp rounded-xl flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl text-gray-900">tAIuto</span>
+                </a>
+                
+                <!-- Centered Navigation Links -->
+                <div class="hidden md:flex items-center justify-center flex-1 space-x-12">
+                    <a href="#funzionalita" class="nav-link text-base font-medium text-gray-700 hover:text-whatsapp transition-colors tracking-wide">Funzionalità</a>
+                    <a href="#benefici" class="nav-link text-base font-medium text-gray-700 hover:text-whatsapp transition-colors tracking-wide">Benefici</a>
+                    <a href="#prezzi" class="nav-link text-base font-medium text-gray-700 hover:text-whatsapp transition-colors tracking-wide">Prezzi</a>
+                </div>
+                
+                <!-- CTA Right -->
+                <div class="flex items-center">
+                    <a href="#demo" class="hidden md:inline-flex btn-shine bg-whatsapp hover:bg-whatsapp-dark text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md">
+                        Richiedi Demo
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white border-t border-gray-100 shadow-lg">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#funzionalita" class="block text-gray-700 font-medium py-2">Funzionalità</a>
+                <a href="#benefici" class="block text-gray-700 font-medium py-2">Benefici</a>
+                <a href="#prezzi" class="block text-gray-700 font-medium py-2">Prezzi</a>
+                <a href="#demo" class="block text-whatsapp font-semibold py-2">Richiedi Demo →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Spacer for fixed navbar -->
+    <div class="h-20"></div>
+    
+    <!-- Hero Section - Minimal with Colored Watermark -->
+    <section class="hero-section relative min-h-[calc(100vh-5rem)] overflow-hidden flex flex-col items-center justify-center">
+        <!-- Soft Background -->
+        <div class="absolute inset-0 -z-20 bg-gradient-to-b from-gray-50 via-white to-gray-50"></div>
+        
+        <!-- GIANT Colored Watermark tAIuto -->
+        <div class="absolute inset-0 -z-10 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+            <h1 class="hero-watermark font-black tracking-tighter leading-none">
+                tAIuto
+            </h1>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-12">
+            
+            <!-- Description -->
+            <p class="text-base md:text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                tAIuto risponde ai messaggi, prenota appuntamenti e libera <strong class="text-gray-900">30+ ore al mese</strong>. 
+                Zero telefonate. Zero stress. Più clienti soddisfatti.
+            </p>
+            
+            <!-- Trust Badges -->
+            <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-whatsapp"></i>
+                    <span>GDPR Compliant</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="clock" class="w-4 h-4 text-whatsapp"></i>
+                    <span>Setup in 24h</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="message-circle" class="w-4 h-4 text-whatsapp"></i>
+                    <span>Su WhatsApp</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400">
+            <span class="text-xs uppercase tracking-widest">Scorri</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 animate-bounce"></i>
+        </div>
+    </section>
+
+    <!-- PHONE SHOWCASE SECTION - Scroll Fullscreen Experience -->
+    <section id="showcase" class="phone-showcase-section">
+        <div class="phone-showcase-container">
+            <!-- Background -->
+            <div class="phone-showcase-bg">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="dot-pattern"></div>
+                <div class="glass-grid"></div>
+            </div>
+            
+            <!-- Progress Dots -->
+            <div class="showcase-progress">
+                <div class="progress-dot active" data-screen="0"></div>
+                <div class="progress-dot" data-screen="1"></div>
+                <div class="progress-dot" data-screen="2"></div>
+                <div class="progress-dot" data-screen="3"></div>
+            </div>
+            
+            <!-- Labels -->
+            <div class="showcase-labels">
+                <div class="showcase-label active" data-label="0">
+                    <h3>WhatsApp AI</h3>
+                    <p>I tuoi clienti scrivono, l'AI risponde<br>in modo naturale e umano</p>
+                </div>
+                <div class="showcase-label" data-label="1">
+                    <h3>Dashboard Intuitiva</h3>
+                    <p>Tutto sotto controllo in un'unica<br>interfaccia pulita e moderna</p>
+                </div>
+                <div class="showcase-label" data-label="2">
+                    <h3>Agenda Smart</h3>
+                    <p>Gestione appuntamenti drag & drop<br>con notifiche automatiche</p>
+                </div>
+                <div class="showcase-label" data-label="3">
+                    <h3>Analytics Potenti</h3>
+                    <p>Dati e insight per far crescere<br>il tuo business</p>
+                </div>
+            </div>
+            
+            <!-- Floating Elements -->
+            <div class="float-element" style="top: 20%; left: 10%;">
+                <div class="float-element-icon bg-whatsapp/10 text-whatsapp">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                </div>
+                <span>Risposta in 2 secondi</span>
+            </div>
+            <div class="float-element" style="top: 30%; right: 10%;">
+                <div class="float-element-icon bg-blue-100 text-blue-600">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                </div>
+                <span>+150 clienti/giorno</span>
+            </div>
+            <div class="float-element" style="bottom: 25%; left: 8%;">
+                <div class="float-element-icon bg-brand-yellow/50 text-brand-amber">
+                    <i data-lucide="trending-up" class="w-5 h-5"></i>
+                </div>
+                <span>+47% prenotazioni</span>
+            </div>
+            <div class="float-element" style="bottom: 35%; right: 8%;">
+                <div class="float-element-icon bg-purple-100 text-purple-600">
+                    <i data-lucide="clock" class="w-5 h-5"></i>
+                </div>
+                <span>24/7 disponibile</span>
+            </div>
+            
+            <!-- Phone Wrapper -->
+            <div class="phone-showcase-wrapper">
+                <div class="iphone-showcase" id="showcase-phone">
+                    <div class="iphone-showcase-screen">
+                        <div class="iphone-showcase-notch"></div>
+                        
+                        <!-- Screen 1: WhatsApp Chat -->
+                        <div class="screen-state screen-chat active" data-screen="0">
+                            <!-- WhatsApp Header -->
+                            <div class="bg-whatsapp-darker pt-10 pb-3 px-4 flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">
+                                    <i data-lucide="sparkles" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-white font-semibold text-sm">tAIuto</div>
+                                    <div class="text-green-300 text-xs">online</div>
+                                </div>
+                            </div>
+                            <!-- Chat -->
+                            <div class="whatsapp-bg h-[calc(100%-120px)] p-3 flex flex-col space-y-2 overflow-hidden">
+                                <div class="text-center text-[10px] text-gray-500 my-1">
+                                    <span class="bg-[#E5DDD5] px-2 py-0.5 rounded-full">Oggi</span>
+                                </div>
+                                <div class="bg-white self-start px-3 py-2 rounded-lg rounded-bl-none text-xs max-w-[85%] shadow-sm">
+                                    Buongiorno! Vorrei prenotare un taglio 🙏
+                                </div>
+                                <div class="bg-[#dcf8c6] self-end px-3 py-2 rounded-lg rounded-br-none text-xs max-w-[85%]">
+                                    Ciao! Certo, sono tAIuto 👋
+                                    <div class="text-[8px] text-gray-500 text-right mt-1">09:15 ✓✓</div>
+                                </div>
+                                <div class="bg-[#dcf8c6] self-end px-3 py-2 rounded-lg rounded-br-none text-xs max-w-[85%]">
+                                    Ho disponibilità:<br>• 14:30 con Marco<br>• 16:00 con Sofia
+                                    <div class="text-[8px] text-gray-500 text-right mt-1">09:15 ✓✓</div>
+                                </div>
+                                <div class="bg-white self-start px-3 py-2 rounded-lg rounded-bl-none text-xs max-w-[85%] shadow-sm">
+                                    Perfetto, prendo le 16:00! ✨
+                                </div>
+                                <div class="bg-[#dcf8c6] self-end px-3 py-2 rounded-lg rounded-br-none text-xs max-w-[85%]">
+                                    <strong>Prenotazione confermata!</strong> 📅<br>
+                                    Martedì 16:00 con Sofia
+                                    <div class="text-[8px] text-gray-500 text-right mt-1">09:16 ✓✓</div>
+                                </div>
+                            </div>
+                            <!-- Input -->
+                            <div class="absolute bottom-0 left-0 right-0 bg-[#F0F2F5] p-2 flex items-center space-x-2">
+                                <div class="flex-1 bg-white rounded-full px-3 py-1.5 text-xs text-gray-400">
+                                    Scrivi...
+                                </div>
+                                <div class="w-8 h-8 bg-whatsapp rounded-full flex items-center justify-center">
+                                    <i data-lucide="mic" class="w-4 h-4 text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Screen 2: Dashboard -->
+                        <div class="screen-state screen-dashboard" data-screen="1">
+                            <div class="bg-white pt-8 pb-2 px-4 border-b">
+                                <div class="text-lg font-bold">Dashboard</div>
+                                <div class="text-xs text-gray-500">Buongiorno, Sofia! 👋</div>
+                            </div>
+                            <div class="p-3 space-y-3">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="bg-whatsapp/10 rounded-xl p-3">
+                                        <div class="text-2xl font-bold text-whatsapp">24</div>
+                                        <div class="text-[10px] text-gray-600">Appuntamenti oggi</div>
+                                    </div>
+                                    <div class="bg-blue-50 rounded-xl p-3">
+                                        <div class="text-2xl font-bold text-blue-600">€1.2k</div>
+                                        <div class="text-[10px] text-gray-600">Fatturato</div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-3">
+                                    <div class="text-xs font-semibold mb-2">Prossimi Appuntamenti</div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between bg-white rounded-lg p-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                                    <span class="text-xs font-bold text-purple-600">MR</span>
+                                                </div>
+                                                <div>
+                                                    <div class="text-xs font-medium">Maria Rossi</div>
+                                                    <div class="text-[10px] text-gray-500">Taglio + Colore</div>
+                                                </div>
+                                            </div>
+                                            <div class="text-xs font-semibold text-whatsapp">09:00</div>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white rounded-lg p-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center">
+                                                    <span class="text-xs font-bold text-pink-600">AB</span>
+                                                </div>
+                                                <div>
+                                                    <div class="text-xs font-medium">Anna Bianchi</div>
+                                                    <div class="text-[10px] text-gray-500">Manicure</div>
+                                                </div>
+                                            </div>
+                                            <div class="text-xs font-semibold">11:30</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Bottom Nav -->
+                            <div class="absolute bottom-0 left-0 right-0 bg-white border-t flex justify-around py-2">
+                                <div class="flex flex-col items-center text-whatsapp">
+                                    <i data-lucide="home" class="w-5 h-5"></i>
+                                    <span class="text-[10px]">Home</span>
+                                </div>
+                                <div class="flex flex-col items-center text-gray-400">
+                                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                                    <span class="text-[10px]">Agenda</span>
+                                </div>
+                                <div class="flex flex-col items-center text-gray-400">
+                                    <i data-lucide="users" class="w-5 h-5"></i>
+                                    <span class="text-[10px]">Clienti</span>
+                                </div>
+                                <div class="flex flex-col items-center text-gray-400">
+                                    <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                                    <span class="text-[10px]">Stats</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Screen 3: Calendar -->
+                        <div class="screen-state screen-calendar" data-screen="2">
+                            <div class="bg-whatsapp pt-8 pb-3 px-4">
+                                <div class="flex justify-between items-center">
+                                    <div class="text-white">
+                                        <div class="text-xs opacity-80">Febbraio 2026</div>
+                                        <div class="text-xl font-bold">Martedì 3</div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                                            <i data-lucide="chevron-left" class="w-4 h-4 text-white"></i>
+                                        </div>
+                                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                                            <i data-lucide="chevron-right" class="w-4 h-4 text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-t-3xl -mt-2 pt-4 px-3">
+                                <!-- Day selector -->
+                                <div class="flex justify-between mb-4">
+                                    <div class="flex flex-col items-center p-2 rounded-xl">
+                                        <span class="text-[10px] text-gray-500">Lun</span>
+                                        <span class="text-sm font-semibold">2</span>
+                                    </div>
+                                    <div class="flex flex-col items-center p-2 bg-whatsapp/10 rounded-xl text-whatsapp">
+                                        <span class="text-[10px]">Mar</span>
+                                        <span class="text-sm font-bold">3</span>
+                                    </div>
+                                    <div class="flex flex-col items-center p-2 rounded-xl">
+                                        <span class="text-[10px] text-gray-500">Mer</span>
+                                        <span class="text-sm font-semibold">4</span>
+                                    </div>
+                                    <div class="flex flex-col items-center p-2 rounded-xl">
+                                        <span class="text-[10px] text-gray-500">Gio</span>
+                                        <span class="text-sm font-semibold">5</span>
+                                    </div>
+                                    <div class="flex flex-col items-center p-2 rounded-xl">
+                                        <span class="text-[10px] text-gray-500">Ven</span>
+                                        <span class="text-sm font-semibold">6</span>
+                                    </div>
+                                </div>
+                                <!-- Timeline -->
+                                <div class="space-y-2">
+                                    <div class="flex gap-3">
+                                        <div class="text-xs text-gray-500 w-10">09:00</div>
+                                        <div class="flex-1 bg-purple-100 rounded-lg p-2 border-l-4 border-purple-500">
+                                            <div class="text-xs font-semibold">Maria Rossi</div>
+                                            <div class="text-[10px] text-gray-600">Taglio + Colore</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="text-xs text-gray-500 w-10">11:30</div>
+                                        <div class="flex-1 bg-pink-100 rounded-lg p-2 border-l-4 border-pink-500">
+                                            <div class="text-xs font-semibold">Anna Bianchi</div>
+                                            <div class="text-[10px] text-gray-600">Manicure</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="text-xs text-gray-500 w-10">14:30</div>
+                                        <div class="flex-1 bg-whatsapp/20 rounded-lg p-2 border-l-4 border-whatsapp">
+                                            <div class="text-xs font-semibold">Luca Verdi</div>
+                                            <div class="text-[10px] text-gray-600">Taglio Uomo (AI)</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="text-xs text-gray-500 w-10">16:00</div>
+                                        <div class="flex-1 bg-blue-100 rounded-lg p-2 border-l-4 border-blue-500">
+                                            <div class="text-xs font-semibold">Giulia Neri</div>
+                                            <div class="text-[10px] text-gray-600">Piega</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Screen 4: Analytics -->
+                        <div class="screen-state screen-analytics" data-screen="3">
+                            <div class="pt-8 px-4">
+                                <div class="text-white text-xl font-bold mb-1">Analytics</div>
+                                <div class="text-xs text-gray-400">Ultimi 30 giorni</div>
+                            </div>
+                            <div class="p-4 space-y-3">
+                                <!-- Stats Cards -->
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="bg-white/10 backdrop-blur rounded-xl p-3">
+                                        <div class="text-xs text-gray-400 mb-1">Fatturato</div>
+                                        <div class="text-xl font-bold text-white">€12.4k</div>
+                                        <div class="text-[10px] text-green-400 flex items-center gap-1">
+                                            <i data-lucide="trending-up" class="w-3 h-3"></i>
+                                            +23%
+                                        </div>
+                                    </div>
+                                    <div class="bg-white/10 backdrop-blur rounded-xl p-3">
+                                        <div class="text-xs text-gray-400 mb-1">Clienti</div>
+                                        <div class="text-xl font-bold text-white">186</div>
+                                        <div class="text-[10px] text-green-400 flex items-center gap-1">
+                                            <i data-lucide="trending-up" class="w-3 h-3"></i>
+                                            +15%
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Chart Placeholder -->
+                                <div class="bg-white/5 rounded-xl p-3">
+                                    <div class="text-xs text-gray-300 mb-3">Andamento Settimanale</div>
+                                    <div class="flex items-end justify-between h-24 gap-1">
+                                        <div class="flex-1 bg-whatsapp/60 rounded-t" style="height: 60%"></div>
+                                        <div class="flex-1 bg-whatsapp/60 rounded-t" style="height: 80%"></div>
+                                        <div class="flex-1 bg-whatsapp/60 rounded-t" style="height: 45%"></div>
+                                        <div class="flex-1 bg-whatsapp rounded-t" style="height: 100%"></div>
+                                        <div class="flex-1 bg-whatsapp/60 rounded-t" style="height: 70%"></div>
+                                        <div class="flex-1 bg-whatsapp/60 rounded-t" style="height: 55%"></div>
+                                        <div class="flex-1 bg-whatsapp/60 rounded-t" style="height: 85%"></div>
+                                    </div>
+                                    <div class="flex justify-between mt-2 text-[10px] text-gray-500">
+                                        <span>Lun</span>
+                                        <span>Mar</span>
+                                        <span>Mer</span>
+                                        <span>Gio</span>
+                                        <span>Ven</span>
+                                        <span>Sab</span>
+                                        <span>Dom</span>
+                                    </div>
+                                </div>
+                                <!-- Top Services -->
+                                <div class="bg-white/5 rounded-xl p-3">
+                                    <div class="text-xs text-gray-300 mb-2">Servizi Top</div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs text-white">Taglio Donna</span>
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-20 h-2 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-whatsapp rounded-full" style="width: 85%"></div>
+                                                </div>
+                                                <span class="text-[10px] text-gray-400">85%</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs text-white">Colore</span>
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-20 h-2 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-whatsapp rounded-full" style="width: 62%"></div>
+                                                </div>
+                                                <span class="text-[10px] text-gray-400">62%</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs text-white">Manicure</span>
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-20 h-2 bg-white/10 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-whatsapp rounded-full" style="width: 48%"></div>
+                                                </div>
+                                                <span class="text-[10px] text-gray-400">48%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll hint at bottom -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-400 text-sm flex flex-col items-center gap-2 opacity-0 transition-opacity duration-500" id="showcase-scroll-hint">
+                <span>Continua a scorrere</span>
+                <i data-lucide="chevron-down" class="w-5 h-5 animate-bounce"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="come-funziona" class="steps-section py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-whatsapp font-semibold text-sm uppercase tracking-wider">Processo Semplice</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3 mb-4">Come funziona in 5 passi</h2>
+                <p class="text-gray-600 text-lg">Nessun app da scaricare. I tuoi clienti usano solo WhatsApp, tu gestisci tutto da una dashboard intuitiva.</p>
+            </div>
+            
+            <div class="relative">
+                <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-whatsapp via-brand-yellow to-whatsapp-dark -translate-y-1/2 rounded-full"></div>
+                
+                <div class="grid lg:grid-cols-5 gap-6 stagger-children">
+                    <div class="step-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg hover:shadow-xl transition-all z-10">
+                        <div class="w-14 h-14 bg-whatsapp rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-whatsapp/30">
+                            <i data-lucide="message-circle" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div class="text-sm font-bold text-whatsapp mb-2">PASSO 1</div>
+                        <h3 class="font-display font-bold text-lg mb-2">Cliente scrive</h3>
+                        <p class="text-sm text-gray-600">Il cliente invia un messaggio su WhatsApp come fa sempre</p>
+                    </div>
+                    
+                    <div class="step-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg hover:shadow-xl transition-all z-10">
+                        <div class="w-14 h-14 bg-whatsapp rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-whatsapp/30">
+                            <i data-lucide="zap" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div class="text-sm font-bold text-whatsapp mb-2">PASSO 2</div>
+                        <h3 class="font-display font-bold text-lg mb-2">Risposta immediata</h3>
+                        <p class="text-sm text-gray-600">L'AI risponde in meno di 3 secondi, 24 ore su 24</p>
+                    </div>
+                    
+                    <div class="step-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg hover:shadow-xl transition-all z-10">
+                        <div class="w-14 h-14 bg-whatsapp rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-whatsapp/30">
+                            <i data-lucide="heart-handshake" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div class="text-sm font-bold text-whatsapp mb-2">PASSO 3</div>
+                        <h3 class="font-display font-bold text-lg mb-2">Conversazione naturale</h3>
+                        <p class="text-sm text-gray-600">Dialogo umano: capisce esigenze, suggerisce, risponde</p>
+                    </div>
+                    
+                    <div class="step-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg hover:shadow-xl transition-all z-10">
+                        <div class="w-14 h-14 bg-whatsapp rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-whatsapp/30">
+                            <i data-lucide="clipboard-check" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div class="text-sm font-bold text-whatsapp mb-2">PASSO 4</div>
+                        <h3 class="font-display font-bold text-lg mb-2">Conferma dettagli</h3>
+                        <p class="text-sm text-gray-600">Verifica servizio, data, operatore preferito</p>
+                    </div>
+                    
+                    <div class="step-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg hover:shadow-xl transition-all z-10">
+                        <div class="w-14 h-14 bg-brand-amber rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-brand-amber/30">
+                            <i data-lucide="calendar-check" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div class="text-sm font-bold text-brand-amber mb-2">PASSO 5</div>
+                        <h3 class="font-display font-bold text-lg mb-2">Prenotazione creata</h3>
+                        <p class="text-sm text-gray-600">Appuntamento salvato, notifiche inviate, agenda aggiornata</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section id="benefici" class="benefits-section py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal-left">
+                    <span class="text-whatsapp font-semibold text-sm uppercase tracking-wider">Perché scegliere tAIuto</span>
+                    <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3 mb-6">Benefici concreti per il tuo salone</h2>
+                    <p class="text-gray-600 text-lg mb-8">Non è solo tecnologia. È tempo ritrovato, clienti più felici e un team che può concentrarsi su ciò che fa davvero la differenza.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="benefit-item flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-whatsapp/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="clock" class="w-6 h-6 text-whatsapp"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-lg mb-1">30-40 ore liberate al mese</h3>
+                                <p class="text-gray-600 text-sm">Tempo da reinvestire in servizi premium, formazione o semplicemente vita privata</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="trending-up" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-lg mb-1">Più prenotazioni, zero perdite</h3>
+                                <p class="text-gray-600 text-sm">Rispondi a tutti, istantaneamente. Nessun cliente perso perché "nessuno rispondeva"</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="users" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-lg mb-1">Staff più efficiente e felice</h3>
+                                <p class="text-gray-600 text-sm">I tuoi collaboratori fanno ciò per cui sono stati assunti: acconciare, non rispondere al telefono</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-brand-yellow/50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="moon" class="w-6 h-6 text-brand-amber"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-lg mb-1">Disponibilità 24/7/365</h3>
+                                <p class="text-gray-600 text-sm">Prenotazioni mentre dormi, durante i weekend, nei giorni di chiusura</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="benefits-images relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-whatsapp/30 to-brand-yellow/30 rounded-3xl blur-3xl"></div>
+                    <div class="relative grid grid-cols-2 gap-4">
+                        <div class="space-y-4 mt-8">
+                            <div class="benefit-img reveal-scale bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover-lift">
+                                <i data-lucide="sparkles" class="w-8 h-8 text-whatsapp mb-3"></i>
+                                <div class="text-2xl font-bold">+47%</div>
+                                <div class="text-sm text-gray-600">Prenotazioni online</div>
+                            </div>
+                            <div class="benefit-img reveal-scale bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover-lift">
+                                <i data-lucide="heart" class="w-8 h-8 text-pink-500 mb-3"></i>
+                                <div class="text-2xl font-bold">98%</div>
+                                <div class="text-sm text-gray-600">Clienti soddisfatti</div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="benefit-img reveal-scale bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover-lift">
+                                <i data-lucide="timer-off" class="w-8 h-8 text-brand-amber mb-3"></i>
+                                <div class="text-2xl font-bold">-85%</div>
+                                <div class="text-sm text-gray-600">Tempo admin</div>
+                            </div>
+                            <div class="benefit-img reveal-scale bg-whatsapp rounded-2xl p-6 shadow-lg shadow-whatsapp/30 hover-lift">
+                                <i data-lucide="smartphone" class="w-8 h-8 text-white mb-3"></i>
+                                <div class="text-2xl font-bold text-white">100%</div>
+                                <div class="text-sm text-whatsapp-light">Su WhatsApp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator -->
+    <section class="roi-section py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-brand-yellow font-semibold text-sm uppercase tracking-wider">Calcolo ROI</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3 mb-4">L'investimento che si ripaga da solo</h2>
+                <p class="text-gray-400 text-lg">Esempio reale: salone con 3 dipendenti</p>
+            </div>
+            
+            <div class="roi-card bg-white/5 backdrop-blur rounded-3xl p-8 md:p-12 border border-white/10">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center md:text-left reveal">
+                        <div class="text-sm text-gray-400 mb-2">Tempo liberato</div>
+                        <div class="text-5xl font-display font-bold text-whatsapp mb-2">30h</div>
+                        <div class="text-gray-400">al mese in media</div>
+                    </div>
+                    
+                    <div class="flex items-center justify-center reveal">
+                        <div class="text-6xl text-brand-yellow">×</div>
+                    </div>
+                    
+                    <div class="text-center md:text-left reveal">
+                        <div class="text-sm text-gray-400 mb-2">Valore orario servizi</div>
+                        <div class="text-5xl font-display font-bold text-brand-yellow mb-2">€50</div>
+                        <div class="text-gray-400">fatturabile medio</div>
+                    </div>
+                </div>
+                
+                <div class="my-10 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                
+                <div class="text-center reveal">
+                    <div class="text-sm text-gray-400 mb-3">Valore generato mensilmente</div>
+                    <div class="text-6xl md:text-7xl font-display font-bold gradient-text mb-2">€1.500</div>
+                    <div class="text-gray-400">= <span class="text-white font-semibold">€18.000</span> all'anno di potenziale extra</div>
+                </div>
+                
+                <div class="mt-10 p-6 bg-whatsapp/10 rounded-2xl border border-whatsapp/20 reveal">
+                    <div class="flex items-center justify-between flex-wrap gap-4">
+                        <div>
+                            <div class="text-sm text-whatsapp-light mb-1">Costo tAIuto</div>
+                            <div class="text-2xl font-bold">€39,90/mese</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm text-whatsapp-light mb-1">Return on Investment</div>
+                            <div class="text-3xl font-bold text-whatsapp">3.660%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="prezzi" class="pricing-section py-24 bg-gray-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-whatsapp font-semibold text-sm uppercase tracking-wider">Pricing Semplice</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3 mb-4">Un piano, tutto incluso</h2>
+                <p class="text-gray-600 text-lg">Nessun contratto, nessuna sorpresa. Cancelli quando vuoi.</p>
+            </div>
+            
+            <div class="max-w-md mx-auto">
+                <div class="pricing-card pricing-popular bg-white rounded-3xl shadow-xl border-2 border-whatsapp overflow-hidden reveal-scale">
+                    <div class="bg-whatsapp text-white text-center py-3">
+                        <span class="text-sm font-semibold">PIÙ SCELTO</span>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-center mb-8">
+                            <h3 class="font-display font-bold text-2xl mb-2">tAIuto Complete</h3>
+                            <p class="text-gray-600 text-sm">Tutto ciò che serve per il tuo salone</p>
+                        </div>
+                        
+                        <div class="text-center mb-8">
+                            <div class="flex items-end justify-center space-x-1">
+                                <span class="text-5xl font-display font-bold text-gray-900">€39,90</span>
+                                <span class="text-gray-500 mb-2">/mese</span>
+                            </div>
+                            <div class="mt-2 text-sm text-gray-500">+ €49,90 setup una tantum</div>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check" class="w-5 h-5 text-whatsapp flex-shrink-0"></i>
+                                <span class="text-sm">AI WhatsApp illimitata</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check" class="w-5 h-5 text-whatsapp flex-shrink-0"></i>
+                                <span class="text-sm">Dashboard completa</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check" class="w-5 h-5 text-whatsapp flex-shrink-0"></i>
+                                <span class="text-sm">Gestione personale</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check" class="w-5 h-5 text-whatsapp flex-shrink-0"></i>
+                                <span class="text-sm">Magazzino & Analytics</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check" class="w-5 h-5 text-whatsapp flex-shrink-0"></i>
+                                <span class="text-sm">Supporto dedicato</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check" class="w-5 h-5 text-whatsapp flex-shrink-0"></i>
+                                <span class="text-sm">Aggiornamenti inclusi</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="#demo" class="btn-shine block w-full bg-whatsapp hover:bg-whatsapp-dark text-white text-center py-4 rounded-xl font-semibold transition-all shadow-lg shadow-whatsapp/25">
+                            Inizia Prova Gratuita
+                        </a>
+                        
+                        <p class="text-center text-xs text-gray-500 mt-4">14 giorni free • Carta non richiesta • Cancellazione immediata</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation -->
+    <section class="implementation-section py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-whatsapp font-semibold text-sm uppercase tracking-wider">Setup Istantaneo</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3 mb-4">Attivo in 48 ore</h2>
+                <p class="text-gray-600 text-lg">Zero training. Zero stress. Zero interruzione delle tue attività.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="impl-step relative reveal-left">
+                    <div class="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-whatsapp to-whatsapp-dark rounded-full"></div>
+                    <div class="pl-8">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-12 h-12 bg-whatsapp rounded-xl flex items-center justify-center">
+                                <span class="text-white font-bold">1</span>
+                            </div>
+                            <div>
+                                <div class="text-sm text-whatsapp font-semibold">Giorno 1</div>
+                                <h3 class="font-display font-bold text-xl">Configurazione</h3>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center space-x-2">
+                                <i data-lucide="check" class="w-4 h-4 text-whatsapp"></i>
+                                <span class="text-sm">Call di onboarding (30 min)</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i data-lucide="check" class="w-4 h-4 text-whatsapp"></i>
+                                <span class="text-sm">Import servizi e prezzi</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i data-lucide="check" class="w-4 h-4 text-whatsapp"></i>
+                                <span class="text-sm">Configurazione orari e staff</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="impl-step relative reveal-right">
+                    <div class="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-brand-amber to-brand-yellow rounded-full"></div>
+                    <div class="pl-8">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-12 h-12 bg-brand-amber rounded-xl flex items-center justify-center">
+                                <span class="text-white font-bold">2</span>
+                            </div>
+                            <div>
+                                <div class="text-sm text-brand-amber font-semibold">Giorno 2</div>
+                                <h3 class="font-display font-bold text-xl">Go Live</h3>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center space-x-2">
+                                <i data-lucide="check" class="w-4 h-4 text-brand-amber"></i>
+                                <span class="text-sm">AI attiva e testata</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i data-lucide="check" class="w-4 h-4 text-brand-amber"></i>
+                                <span class="text-sm">Accesso dashboard</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i data-lucide="check" class="w-4 h-4 text-brand-amber"></i>
+                                <span class="text-sm">Prima prenotazione AI!</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- vs Competitors -->
+    <section class="comparison-section py-24 bg-gray-900 text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-brand-yellow font-semibold text-sm uppercase tracking-wider">Perché Noi</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3 mb-4">tAIuto vs Competitors</h2>
+            </div>
+            
+            <div class="overflow-x-auto reveal">
+                <table class="comparison-table w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left py-4 px-4 font-semibold">Caratteristica</th>
+                            <th class="text-center py-4 px-4 font-semibold text-gray-400">Altri Software</th>
+                            <th class="text-center py-4 px-4 font-semibold text-whatsapp">tAIuto</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr>
+                            <td class="py-4 px-4">Risposta AI su WhatsApp</td>
+                            <td class="text-center py-4 px-4"><i data-lucide="x" class="w-5 h-5 text-red-400 mx-auto"></i></td>
+                            <td class="text-center py-4 px-4"><i data-lucide="check" class="w-5 h-5 text-whatsapp mx-auto"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">Prenotazioni automatiche</td>
+                            <td class="text-center py-4 px-4 text-gray-500">Manuali</td>
+                            <td class="text-center py-4 px-4 text-whatsapp font-semibold">Automatiche</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">Conversazione umana</td>
+                            <td class="text-center py-4 px-4"><i data-lucide="x" class="w-5 h-5 text-red-400 mx-auto"></i></td>
+                            <td class="text-center py-4 px-4"><i data-lucide="check" class="w-5 h-5 text-whatsapp mx-auto"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">Memo/auguri compleanno</td>
+                            <td class="text-center py-4 px-4"><i data-lucide="check" class="w-5 h-5 text-gray-400 mx-auto"></i></td>
+                            <td class="text-center py-4 px-4"><i data-lucide="check" class="w-5 h-5 text-whatsapp mx-auto"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">Disponibilità 24/7</td>
+                            <td class="text-center py-4 px-4"><i data-lucide="x" class="w-5 h-5 text-red-400 mx-auto"></i></td>
+                            <td class="text-center py-4 px-4"><i data-lucide="check" class="w-5 h-5 text-whatsapp mx-auto"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">Tempo di setup</td>
+                            <td class="text-center py-4 px-4 text-gray-500">Settimane</td>
+                            <td class="text-center py-4 px-4 text-whatsapp font-semibold">48 ore</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">Training richiesto</td>
+                            <td class="text-center py-4 px-4 text-gray-500">Sì, estensivo</td>
+                            <td class="text-center py-4 px-4 text-whatsapp font-semibold">Zero</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">Prezzo mensile</td>
+                            <td class="text-center py-4 px-4 text-gray-500">€80-200+</td>
+                            <td class="text-center py-4 px-4 text-whatsapp font-semibold">€39,90</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience -->
+    <section class="target-section py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-whatsapp font-semibold text-sm uppercase tracking-wider">Target</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3 mb-4">Per chi è tAIuto?</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 stagger-children">
+                <div class="target-card reveal p-8 rounded-3xl bg-gray-50 cursor-pointer">
+                    <div class="target-icon w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 transition-colors">
+                        <i data-lucide="clock" class="w-8 h-8 text-whatsapp transition-colors"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl mb-3">Chi vuole risparmiare tempo</h3>
+                    <p class="target-text text-gray-600 transition-colors">Stai ancora rispondendo personalmente a ogni messaggio? tAIuto ti restituisce la tua giornata.</p>
+                </div>
+                
+                <div class="target-card reveal p-8 rounded-3xl bg-gray-50 cursor-pointer">
+                    <div class="target-icon w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 transition-colors">
+                        <i data-lucide="trending-up" class="w-8 h-8 text-whatsapp transition-colors"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl mb-3">Chi vuole crescere</h3>
+                    <p class="target-text text-gray-600 transition-colors">Vuoi più clienti senza assumere? L'AI scala con te, senza costi aggiuntivi.</p>
+                </div>
+                
+                <div class="target-card reveal p-8 rounded-3xl bg-gray-50 cursor-pointer">
+                    <div class="target-icon w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 transition-colors">
+                        <i data-lucide="smartphone" class="w-8 h-8 text-whatsapp transition-colors"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl mb-3">Chi vuole modernizzarsi</h3>
+                    <p class="target-text text-gray-600 transition-colors">I tuoi clienti preferiscono WhatsApp alle telefonate? Portali dove vogliono loro.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="demo" class="cta-section py-24 bg-gradient-to-br from-whatsapp via-whatsapp-dark to-brand-darker relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px); background-size: 40px 40px;"></div>
+        </div>
+        
+        <div class="cta-content max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+            <h2 class="font-display font-bold text-4xl sm:text-5xl text-white mb-6">Pronta a liberare il tuo tempo?</h2>
+            <p class="text-xl text-white/80 mb-10 max-w-2xl mx-auto">Prenota una demo gratuita di 30 minuti. Ti mostriamo tAIuto in azione sul tuo salone, senza impegno.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <a href="mailto:info@taiuto.it?subject=Richiesta Demo tAIuto" class="btn-shine inline-flex items-center justify-center space-x-2 bg-white text-whatsapp-dark hover:bg-gray-100 px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-xl hover-lift">
+                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                    <span>Prenota Demo Gratis</span>
+                </a>
+                <a href="mailto:info@taiuto.it" class="inline-flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-4 rounded-full font-semibold text-lg transition-all hover-lift">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                    <span>Scrivici</span>
+                </a>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-8 text-white/60 text-sm">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i>
+                    <span>Setup in 48h</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i>
+                    <span>14 giorni prova</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i>
+                    <span>Cancella quando vuoi</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <a href="#" class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-whatsapp to-whatsapp-dark rounded-xl flex items-center justify-center">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl">tAIuto</span>
+                    </a>
+                    <p class="text-gray-400 text-sm">L'AI che gestisce il tuo salone mentre tu fai ciò che ami.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Prodotto</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#funzionalita" class="footer-link hover:text-white transition-colors">Funzionalità</a></li>
+                        <li><a href="#prezzi" class="footer-link hover:text-white transition-colors">Prezzi</a></li>
+                        <li><a href="#come-funziona" class="footer-link hover:text-white transition-colors">Come funziona</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Azienda</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="footer-link hover:text-white transition-colors">Chi siamo</a></li>
+                        <li><a href="#" class="footer-link hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="footer-link hover:text-white transition-colors">Lavora con noi</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Contatti</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                            <a href="mailto:info@taiuto.it" class="footer-link hover:text-white transition-colors">info@taiuto.it</a>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                            <a href="https://www.taiuto.it" class="footer-link hover:text-white transition-colors">www.taiuto.it</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500">© 2026 tAIuto. Tutti i diritti riservati.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/showcase.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
